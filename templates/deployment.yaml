@@ -20,11 +20,11 @@ spec:
     type: RollingUpdate
   resources:
     requests:
-        memory: {{ Values.requests.memory }}
-        cpu: {{ Values.requests.cpu }}
+      memory: {{ Values.requests.memory }}
+      cpu: {{ Values.requests.cpu }}
     limits:
-        memory: {{ Values.limits.memory }}
-        cpu: {{ Values.limits.cpu }}
+      memory: {{ Values.limits.memory }}
+      cpu: {{ Values.limits.cpu }}
   template:
     metadata:
       labels:
