@@ -4,7 +4,8 @@ namespace:
 image:
   repository: nginx
   tag: alpine
-
+  pullPolicy: IfNotPresent
+  
 replicaCount: 3
 
 resources:
