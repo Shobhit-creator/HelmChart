@@ -10,8 +10,8 @@ replicaCount: 3
 
 resources:
   requests:
-    memory: "50Mi"
-    cpu: "256m"
+    memory: 50Mi
+    cpu: 256m
     
 service:
   type: ClusterIP
