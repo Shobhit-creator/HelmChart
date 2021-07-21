@@ -1,18 +1,17 @@
-  
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: nginx
-    tag: alpine
-  name: nginx-alpine
-  namespace: {{ Values.namespace.value }}
+    app: {{ Values.image.repository }}
+    tag: {{ Values.image.tag }}
+  name: {{ Values.image.repository }}-{{ Values.image.tag }}
+  namespace: {{ Values.namespace.name }}
 spec:
   replicas: {{ Values.replica.count }}
   selector:
     matchLabels:
-      app: nginx
-      tag: alpine
+      app: {{ Values.image.repository }}
+      tag: {{ Values.image.tag }}
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -20,18 +19,15 @@ spec:
     type: RollingUpdate
   resources:
     requests:
-      memory: {{ Values.requests.memory }}
-      cpu: {{ Values.requests.cpu }}
-    limits:
-      memory: {{ Values.limits.memory }}
-      cpu: {{ Values.limits.cpu }}
+      memory: {{ Values.resources.memory }}
+      cpu: {{ Values.resources.CPU }}
   template:
     metadata:
       labels:
-        app: nginx
-        tag: alpine
+        app: {{ Values.image.repository }}
+        tag: {{ Values.image.tag }}
     spec:
       containers:
-      - image: nginx:alpine
-        imagePullPolicy: {{ Values.image.pullpolicy }}
-        name: {{ Values.image.name }}
+      - image: {{ Values.image.repository }}:{{ Values.image.tag }}
+        imagePullPolicy: {{ Values.image.pull.policy }}
+        name: {{ Values.image.repository }}-{{ Values.image.tag }}
