@@ -5,22 +5,18 @@ metadata:
     app: {{ Values.image.repository }}
     tag: {{ Values.image.tag }}
   name: {{ Values.image.repository }}-{{ Values.image.tag }}
-  namespace: {{ Values.namespace.name }}
+  namespace: {{ .Values.namespace.name }}
 spec:
-  replicas: {{ Values.replica.count }}
+  replicas: {{ .Values.replica.count }}
   selector:
     matchLabels:
-      app: {{ Values.image.repository }}
-      tag: {{ Values.image.tag }}
+      app: {{ .Values.image.repository }}
+      tag: {{ .Values.image.tag }}
   strategy:
     rollingUpdate:
       maxSurge: 25%
       maxUnavailable: 25%
     type: RollingUpdate
-  resources:
-    requests:
-      memory: {{ Values.resources.memory }}
-      cpu: {{ Values.resources.CPU }}
   template:
     metadata:
       labels:
@@ -28,6 +24,7 @@ spec:
         tag: {{ Values.image.tag }}
     spec:
       containers:
-      - image: {{ Values.image.repository }}:{{ Values.image.tag }}
-        imagePullPolicy: {{ Values.image.pull.policy }}
-        name: {{ Values.image.repository }}-{{ Values.image.tag }}
+      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        name: {{ .Values.image.repository }}-{{ .Values.image.tag }}
+{{ toYaml .Values.resources | indent 12 }}
